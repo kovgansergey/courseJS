@@ -1,17 +1,18 @@
 "use strict";
 
-let money = +prompt('Ваш месячный доход?');
+let money;
 let income = 'Парашютные прыжки';
 let addExpenses = prompt('Перечислите возможные расходы за рассчитываемый период через запятую');
 let deposit = confirm('Есть ли у вас депозит в банке?');
-let expenses1 = prompt('Введите обязательную статью расходов?');
-let amount1 = +prompt('Во сколько это обойдется?');
-let expenses2 = prompt('Введите обязательную статью расходов?');
-let amount2 = +prompt('Во сколько это обойдется?');
+let expenses = [];
 let mission = 128000;
 let period = 6;
-let accumulatedMonth = getAccumulatedMonth();
-let budgetDay = Math.floor(accumulatedMonth / 30);
+
+function start() {
+  money = +prompt('Ваш месячный доход?');
+}
+
+start();
 
 function showTypeOf(data) {
   return typeof data;
@@ -30,12 +31,24 @@ function getStatusIncome() {
 }
 
 function getExpensesMonth() {
-  return amount1 + amount2;
+  let sum = 0;
+
+  for (let i = 0; i < 4; i++) {
+    expenses[i] = prompt('Введите обязательную статью расходов?')
+    sum += +prompt('Во сколько это обойдется?');
+  }
+
+  return sum;
 }
 
+let expensesAmount = getExpensesMonth();
+
 function getAccumulatedMonth() {
-  return money - getExpensesMonth();
+  return money - expensesAmount;
 }
+
+let accumulatedMonth = getAccumulatedMonth();
+let budgetDay = Math.floor(accumulatedMonth / 30);
 
 function getTargetMonth() {
   return Math.ceil(mission / accumulatedMonth);
@@ -44,7 +57,8 @@ function getTargetMonth() {
 console.log('type "money": ', showTypeOf(money));
 console.log('type "income": ', showTypeOf(income));
 console.log('type "deposit": ', showTypeOf(deposit));
-console.log('Расходы за месяц: ', getExpensesMonth());
+console.log(expenses);
+console.log('Расходы за месяц: ', expensesAmount);
 console.log(addExpenses.toLowerCase().split(', '));
 console.log('Цель будет достигнута за: ' + getTargetMonth() + ' месяцев');
 console.log('Бюджет на день: ', budgetDay);
