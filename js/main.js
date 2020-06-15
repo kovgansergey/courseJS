@@ -8,7 +8,7 @@ let money;
 
 function start() {
   do {
-    money = prompt('Ваш месячный доход?');
+    money = prompt('Ваш месячный доход?', 30000);
   }
   while(!isNumber(money));
 }
@@ -33,13 +33,13 @@ let appData = {
 
       // проверка, что введенные данные - НЕ число и НЕ пустая строка
       do {
-        itemIncome = prompt('Какой у вас дополнительный заработок?').trim();
+        itemIncome = prompt('Какой у вас дополнительный заработок?', 'Таксую').trim();
       }
       while (isNumber(itemIncome) || itemIncome === '');
 
       // проверка, что введенные данные - число
       do {
-        cashIncome = prompt('Сколько в месяц вы на этом зарабатываете?');
+        cashIncome = prompt('Сколько в месяц вы на этом зарабатываете?', 10000);
       }
       while (!isNumber(cashIncome));
       
@@ -55,12 +55,12 @@ let appData = {
       let expensesValue;
 
       do {
-        expensesProperty = prompt('Введите обязательную статью расходов?').trim();
+        expensesProperty = prompt('Введите обязательную статью расходов?', 'Садик государственный').trim();
       }
       while (isNumber(expensesProperty) || expensesProperty === '');
       
       do {
-        expensesValue = prompt('Во сколько это обойдется?');
+        expensesValue = prompt('Во сколько это обойдется?', 2500);
       }
       while(!isNumber(expensesValue));
 
@@ -102,12 +102,12 @@ let appData = {
       let moneyDeposit;
 
       do {
-        percentDeposit = prompt('Какой годовой процент?');
+        percentDeposit = prompt('Какой годовой процент?', 10);
       }
       while (!isNumber(percentDeposit));
 
       do {
-        moneyDeposit = prompt('Какая сумма заложена?');
+        moneyDeposit = prompt('Какая сумма заложена?', 10000);
       }
       while (!isNumber(moneyDeposit));
 
