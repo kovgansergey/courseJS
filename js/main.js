@@ -4,11 +4,24 @@ let isNumber = function(n) {
   return !isNaN(parseFloat(n)) && isFinite(n);
 };
 
+let startBtn = document.getElementById('start');
+let incomeAddBtn = document.getElementsByTagName('button')[0];
+let expensesAddBtn = document.getElementsByTagName('button')[1];
+let depositCheck = document.querySelector('#deposit-check');
+let additionalIncomeItem = document.querySelectorAll('.additional_income-item');
+let budgetMonthValue = document.getElementsByClassName('budget_month-value');
+let budgetDayValue = document.getElementsByClassName('budget_day-value');
+let expensesMonthValue = document.getElementsByClassName('expenses_month-value');
+let additionalIncomeValue = document.getElementsByClassName('additional_income-value');
+let additionalExpensesValue = document.getElementsByClassName('additional_expenses-value');
+let incomePeriodValue = document.getElementsByClassName('income_period-value');
+let targetMonthValue = document.getElementsByClassName('target_month-value');
+
 let money;
 
 function start() {
   do {
-    money = prompt('Ваш месячный доход?');
+    money = prompt('Ваш месячный доход?', 30000);
   }
   while(!isNumber(money));
 }
@@ -33,13 +46,13 @@ let appData = {
 
       // проверка, что введенные данные - НЕ число и НЕ пустая строка
       do {
-        itemIncome = prompt('Какой у вас дополнительный заработок?').trim();
+        itemIncome = prompt('Какой у вас дополнительный заработок?', 'Таксую').trim();
       }
       while (isNumber(itemIncome) || itemIncome === '');
 
       // проверка, что введенные данные - число
       do {
-        cashIncome = prompt('Сколько в месяц вы на этом зарабатываете?');
+        cashIncome = prompt('Сколько в месяц вы на этом зарабатываете?', 10000);
       }
       while (!isNumber(cashIncome));
       
@@ -55,12 +68,12 @@ let appData = {
       let expensesValue;
 
       do {
-        expensesProperty = prompt('Введите обязательную статью расходов?').trim();
+        expensesProperty = prompt('Введите обязательную статью расходов?', 'Садик государственный').trim();
       }
       while (isNumber(expensesProperty) || expensesProperty === '');
       
       do {
-        expensesValue = prompt('Во сколько это обойдется?');
+        expensesValue = prompt('Во сколько это обойдется?', 2500);
       }
       while(!isNumber(expensesValue));
 
@@ -102,12 +115,12 @@ let appData = {
       let moneyDeposit;
 
       do {
-        percentDeposit = prompt('Какой годовой процент?');
+        percentDeposit = prompt('Какой годовой процент?', 10);
       }
       while (!isNumber(percentDeposit));
 
       do {
-        moneyDeposit = prompt('Какая сумма заложена?');
+        moneyDeposit = prompt('Какая сумма заложена?', 10000);
       }
       while (!isNumber(moneyDeposit));
 
