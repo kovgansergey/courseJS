@@ -32,7 +32,7 @@ function validation() {
 
   nameItems.forEach(function(item) {
     item.addEventListener('input', function() {
-      item.value = item.value.replace(/[^А-Яа-я,. ]/,'');
+      item.value = item.value.replace(/[^А-Яа-яЁё,.!?;: ]/,'');
     });
   });
   
