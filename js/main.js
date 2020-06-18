@@ -19,10 +19,29 @@ let additionalExpensesItem = document.querySelector('.additional_expenses-item')
 let targetAmount = document.querySelector('.target-amount');
 let periodSelect = document.querySelector('[type="range"]');
 let periodAmount = document.querySelector('.period-amount');
+let nameItems = document.querySelectorAll('[placeholder="Наименование"]');
+let summItems = document.querySelectorAll('[placeholder="Сумма"]');
 
 let isNumber = function(n) {
   return !isNaN(parseFloat(n)) && isFinite(n);
 };
+
+function validation() {
+  nameItems = document.querySelectorAll('[placeholder="Наименование"]');
+  summItems = document.querySelectorAll('[placeholder="Сумма"]');
+
+  nameItems.forEach(function(item) {
+    item.addEventListener('input', function() {
+      item.value = item.value.replace(/[^А-Яа-я,. ]/,'');
+    });
+  });
+  
+  summItems.forEach(function(item) {
+    item.addEventListener('input', function() {
+      item.value = item.value.replace(/[^0-9]/,'');
+    });
+  });
+}
 
 let appData = {
   budget: 0,
@@ -67,7 +86,12 @@ let appData = {
   },
   addExpensesBlock: function() {
     let cloneExpensesItem = expensesItems[0].cloneNode(true);
+    let cloneExpensesItemInputs = cloneExpensesItem.querySelectorAll('input');
+    cloneExpensesItemInputs.forEach(function(item) {
+      item.value = '';
+    });
     expensesItems[0].parentNode.insertBefore(cloneExpensesItem, expensesPlus);
+    validation();
     expensesItems = document.querySelectorAll('.expenses-items');
 
     if (expensesItems.length === 3) {
@@ -76,7 +100,12 @@ let appData = {
   },
   addIncomeBlock: function() {
     let cloneIncomeItem = incomeItems[0].cloneNode(true);
+    let cloneIncomeItemInputs = cloneIncomeItem.querySelectorAll('input');
+    cloneIncomeItemInputs.forEach(function(item) {
+      item.value = '';
+    });
     incomeItems[0].parentNode.insertBefore(cloneIncomeItem, incomePlus);
+    validation();
     incomeItems = document.querySelectorAll('.income-items');
 
     if (incomeItems.length === 3) {
@@ -178,6 +207,8 @@ start.addEventListener('click', appData.getSalaryAmountCheck);
 expensesPlus.addEventListener('click', appData.addExpensesBlock);
 incomePlus.addEventListener('click', appData.addIncomeBlock);
 periodSelect.addEventListener('input', function() {periodAmount.textContent = periodSelect.value;});
+
+validation();
 
 /*
 console.log('Наша программа включает в себя данные:');
