@@ -1,8 +1,8 @@
 "use strict";
 
-let startBtn = document.getElementById('start');
-let incomeAddBtn = document.getElementsByTagName('button')[0];
-let expensesAddBtn = document.getElementsByTagName('button')[1];
+let start = document.getElementById('start');
+let incomePlus = document.getElementsByTagName('button')[0];
+let expensesPlus = document.getElementsByTagName('button')[1];
 let depositCheck = document.querySelector('#deposit-check');
 let additionalIncomeItem = document.querySelectorAll('.additional_income-item');
 let budgetMonthValue = document.getElementsByClassName('budget_month-value');
@@ -13,29 +13,19 @@ let additionalExpensesValue = document.getElementsByClassName('additional_expens
 let incomePeriodValue = document.getElementsByClassName('income_period-value');
 let targetMonthValue = document.getElementsByClassName('target_month-value');
 let salaryAmount = document.querySelector('.salary-amount');
-let incomeItem = document.querySelector('.income-items>.income-title');
+let incomeTitle = document.querySelector('.income-items>.income-title');
 let incomeAmount = document.querySelector('.income-amount');
-let expensesItem = document.querySelector('.expenses-items>.expenses-title');
+let expensesTitle = document.querySelector('.expenses-items>.expenses-title');
 let expensesAmount = document.querySelector('.expenses-amount');
-let additionalExpensesItem = document.querySelector('.additional_expenses-item');
+let additionalExpenses = document.querySelector('.additional_expenses-item');
 let targetAmount = document.querySelector('.target-amount');
 let periodSelect = document.querySelector('[type="range"]');
 
-/*
 let isNumber = function(n) {
   return !isNaN(parseFloat(n)) && isFinite(n);
 };
 
 let money;
-
-function start() {
-  do {
-    money = prompt('Ваш месячный доход?', 30000);
-  }
-  while(!isNumber(money));
-}
-
-start();
 
 let appData = {
   income: {},
@@ -47,6 +37,12 @@ let appData = {
   moneyDeposit: 0,
   mission: 128000,
   period: 6,
+  start: function() {
+    do {
+      money = prompt('Ваш месячный доход?', 30000);
+    }
+    while(!isNumber(money));
+  },
   asking: function() {
 
     if (confirm('Есть ли у вас дополнительный источник заработка?')) {
@@ -142,6 +138,8 @@ let appData = {
   }
 };
 
+start.addEventListener('click', appData.start);
+
 appData.asking();
 appData.getExpensesMonth();
 appData.getBudget();
@@ -160,4 +158,3 @@ for (let i = 0; i < appData.addExpenses.length; i++) {
 }
 
 console.log(appData.addExpenses.join(', '));
-*/
