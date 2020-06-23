@@ -1,41 +1,55 @@
 'use strict';
 
-let usersSelector = prompt('Введите класс или id блока (Например: ".name" или "#name")');
-let usersHeight = prompt('Введите высоту блока с единицей измерения (Например: "100px")');
-let usersWidth = prompt('Введите ширину блока с единицей измерения (Например: "100px")');
-let usersBg = prompt('Введите свойство заднего фона (цвет, URL-путь к картинке и т.д.)');
-let usersFontSize = prompt('Введите размер шрифта блока с единицей измерения (Например: "18px")');
-let usersText = prompt('Введите любой текст');
+document.addEventListener('DOMContentLoaded', function() {
 
-function DomElement(selector, height, width, bg, fontSize) {
-  this.selector = selector;
-  this.height = height;
-  this.width = width;
-  this.bg = bg;
-  this.fontSize = fontSize;
-}
-
-DomElement.prototype.createElem = function() {
-  let newElem;
-
-  if (this.selector.charAt(0) === '.') {
-    newElem = document.createElement('div');
-    newElem.className = this.selector.slice(1);
+  function DomElement(selector, height, width, bg) {
+    this.newElem = '';
+    this.selector = selector;
+    this.height = height;
+    this.width = width;
+    this.bg = bg;
+    this.top = 200;
+    this.left = 200;
   }
 
-  if (this.selector.charAt(0) === '#') {
-    newElem = document.createElement('p');
-    newElem.id = this.selector.slice(1);
-  }
-  
-  newElem.style.cssText = 'height: ' + this.height + `;
-                            width: ` + this.width + `;
-                            background: ` + this.bg + `;
-                            font-size: ` + this.fontSize + ';';
+  DomElement.prototype.createElem = function() {
+    this.newElem = document.createElement('div');
+    this.newElem.className = this.selector;
+    this.newElem.style.cssText = 'height: ' + this.height + `;
+                              width: ` + this.width + `;
+                              background: ` + this.bg + `;
+                              position: absolute;`;
 
-  newElem.textContent = usersText;
-  document.body.append(newElem);
-};
+    document.body.append(this.newElem);
 
-let block = new DomElement(usersSelector, usersHeight, usersWidth, usersBg, usersFontSize);
-block.createElem();
+    document.addEventListener('keydown', function(event) {
+      
+      if (event.key === "ArrowUp") {
+        this.top -= 10;
+        this.moveElem(this.top, this.left);
+      }
+      if (event.key === "ArrowRight") {
+        this.left += 10;
+        this.moveElem(this.top, this.left);
+      }
+      if (event.key === "ArrowDown") {
+        this.top += 10;
+        this.moveElem(this.top, this.left);
+      }
+      if (event.key === "ArrowLeft") {
+        this.left -= 10;
+        this.moveElem(this.top, this.left);
+      }
+    }.bind(this));
+
+    this.moveElem(this.top, this.left);
+  };
+
+  DomElement.prototype.moveElem = function(top, left) {
+    this.newElem.style.top = top + 'px';
+    this.newElem.style.left = left + 'px';
+  };
+
+  let block = new DomElement('.square', '100px', '100px', 'green');
+  block.createElem();
+});
