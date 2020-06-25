@@ -22,6 +22,9 @@ const periodAmount = document.querySelector('.period-amount');
 let nameItems = document.querySelectorAll('[placeholder="Наименование"]');
 let summItems = document.querySelectorAll('[placeholder="Сумма"]');
 const cancel = document.getElementById('cancel');
+const depositBank = document.querySelector('.deposit-bank');
+const depositAmount = document.querySelector('.deposit-amount');
+const depositPercent = document.querySelector('.deposit-percent');
 
 class AppData {
   constructor() {
@@ -52,6 +55,7 @@ class AppData {
     this.getExpensesMonth();
     this.getIncomeMonth();
     this.getAddExpInc();
+    this.getInfoDeposit();
     this.getBudget();
     this.showResult();
 
@@ -171,21 +175,8 @@ class AppData {
 
   getInfoDeposit() {
     if (this.deposit) {
-      let percentDeposit;
-      let moneyDeposit;
-  
-      do {
-        percentDeposit = prompt('Какой годовой процент?', 10);
-      }
-      while (!this.isNumber(percentDeposit));
-  
-      do {
-        moneyDeposit = prompt('Какая сумма заложена?', 10000);
-      }
-      while (!this.isNumber(moneyDeposit));
-  
-      this.percentDeposit = +percentDeposit;
-      this.moneyDeposit = +moneyDeposit;
+      this.percentDeposit = depositPercent.value;
+      this.moneyDeposit = depositAmount.value;
     }
   }
 
@@ -255,6 +246,27 @@ class AppData {
     start.setAttribute('disabled', true);
   }
 
+  changePercent() {
+    const selectIndex = this;
+    console.log(selectIndex);
+  }
+
+  depositHandler() {
+    if (depositCheck.checked) {
+      depositBank.style.display = 'inline-block';
+      depositAmount.style.display = 'inline-block';
+      this.deposit = true;
+      depositBank.addEventListener('change', this.changePercent);
+    } else {
+      depositBank.style.display = '';
+      depositAmount.style.display = '';
+      depositBank.value = '';
+      depositAmount.value = '';
+      this.deposit = false;
+      depositBank.removeEventListener('change', this.changePercent);
+    }
+  }
+
   eventsListeners() {
     start.setAttribute('disabled', true);
   
@@ -271,6 +283,7 @@ class AppData {
     incomePlus.addEventListener('click', this.addExpIncBlock.bind(this));
     periodSelect.addEventListener('input', () => {periodAmount.textContent = periodSelect.value;});
     cancel.addEventListener('click', this.reset.bind(this));
+    depositCheck.addEventListener('change', this.depositHandler.bind(this));
     
     this.validation();
   }
