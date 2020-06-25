@@ -45,12 +45,13 @@ class AppData {
 
   start() {
     this.budget = +salaryAmount.value;
+    incomeItems = document.querySelectorAll('.income-items');
+    expensesItems = document.querySelectorAll('.expenses-items');
     
     this.getExpInc();
     this.getExpensesMonth();
     this.getIncomeMonth();
-    this.getAddExpenses();
-    this.getAddIncome();
+    this.getAddExpInc();
     this.getBudget();
     this.showResult();
 
@@ -76,33 +77,19 @@ class AppData {
     periodSelect.addEventListener('input', () => {incomePeriodValue.value = this.calcPeriod();});
   }
 
-  addExpensesBlock() {
-    const cloneExpensesItem = expensesItems[0].cloneNode(true);
-    const cloneExpensesItemInputs = cloneExpensesItem.querySelectorAll('input');
-    cloneExpensesItemInputs.forEach((item) => {
+  addExpIncBlock(event) {
+    const startStr = event.target.classList[1].split('_')[0];
+    const cloneItem = document.querySelectorAll(`.${startStr}-items`)[0].cloneNode(true);
+    const cloneItemInputs = cloneItem.querySelectorAll('input');
+    cloneItemInputs.forEach((item) => {
       item.value = '';
     });
-    expensesItems[0].parentNode.insertBefore(cloneExpensesItem, expensesPlus);
+    document.querySelectorAll(`.${startStr}-items`)[0].parentNode.insertBefore(cloneItem, event.target);
     this.validation();
-    expensesItems = document.querySelectorAll('.expenses-items');
-  
-    if (expensesItems.length === 3) {
-      expensesPlus.style.display = 'none';
-    }
-  }
+    const items = document.querySelectorAll(`.${startStr}-items`);
 
-  addIncomeBlock() {
-    const cloneIncomeItem = incomeItems[0].cloneNode(true);
-    const cloneIncomeItemInputs = cloneIncomeItem.querySelectorAll('input');
-    cloneIncomeItemInputs.forEach((item) => {
-      item.value = '';
-    });
-    incomeItems[0].parentNode.insertBefore(cloneIncomeItem, incomePlus);
-    this.validation();
-    incomeItems = document.querySelectorAll('.income-items');
-  
-    if (incomeItems.length === 3) {
-      incomePlus.style.display = 'none';
+    if (items.length === 3) {
+      event.target.style.display = 'none';
     }
   }
 
@@ -122,33 +109,39 @@ class AppData {
     incomeItems.forEach(count);
   }
 
-  getAddExpenses() {
+  getAddExpInc() {
     const addExpenses = additionalExpensesItem.value.split(', ');
-    addExpenses.forEach((item) => {
-      item = item.trim();
-      if (item !== '') {
-        this.addExpenses.push(item);
-      }
-    });
-  }
-
-  getAddIncome() {
+    const addIncome = [];
     additionalIncomeItem.forEach((item) => {
-      const itemValue = item.value.trim();
-      if (itemValue !== '') {
-        this.addIncome.push(itemValue);
-      }
+      addIncome.push(item.value);
     });
+
+    let newArr;
+
+    const count = (item) => {
+      item = item.trim();
+      if (item) {
+        newArr.push(item);
+      }
+    }
+
+    newArr = [];
+    addIncome.forEach(count);
+    this.addIncome = newArr;
+
+    newArr = [];
+    addExpenses.forEach(count);
+    this.addExpenses = newArr;;
   }
 
   getExpensesMonth() {
-    for (let key in this.expenses) {
+    for (const key in this.expenses) {
       this.expensesMonth += this.expenses[key];
     }
   }
 
   getIncomeMonth() {
-    for (let key in this.income) {
+    for (const key in this.income) {
       this.incomeMonth += this.income[key];
     }
   }
@@ -219,6 +212,8 @@ class AppData {
 
   reset() {
     const textInputs = document.querySelectorAll('input[type=text]');
+    incomeItems = document.querySelectorAll('.income-items');
+    expensesItems = document.querySelectorAll('.expenses-items');
 
     textInputs.forEach((item) => {
       item.disabled = false;
@@ -272,8 +267,8 @@ class AppData {
     });
     
     start.addEventListener('click', this.start.bind(this));
-    expensesPlus.addEventListener('click', this.addExpensesBlock.bind(this));
-    incomePlus.addEventListener('click', this.addIncomeBlock.bind(this));
+    expensesPlus.addEventListener('click', this.addExpIncBlock.bind(this));
+    incomePlus.addEventListener('click', this.addExpIncBlock.bind(this));
     periodSelect.addEventListener('input', () => {periodAmount.textContent = periodSelect.value;});
     cancel.addEventListener('click', this.reset.bind(this));
     
