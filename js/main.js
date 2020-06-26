@@ -47,6 +47,10 @@ class AppData {
   }
 
   start() {
+    if (depositCheck.checked && !depositBank.value) {
+      alert('Введите поле "Процент"');
+      return;
+    }
     this.budget = +salaryAmount.value;
     incomeItems = document.querySelectorAll('.income-items');
     expensesItems = document.querySelectorAll('.expenses-items');
@@ -254,9 +258,11 @@ class AppData {
     if (valueSelect === 'other') {
       depositPercent.value = '';
       depositPercent.style.display = 'inline-block';
+      start.setAttribute('disabled', true);
     } else {
       depositPercent.style.display = '';
       depositPercent.value = valueSelect;
+      start.removeAttribute('disabled');
     }
   }
 
