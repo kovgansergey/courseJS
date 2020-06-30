@@ -76,13 +76,23 @@ class AppData {
 
   showResult() {
     budgetMonthValue.value = this.budgetMonth;
+    this.setCookie('budgetMonthValue', budgetMonthValue.value);
     budgetDayValue.value = this.budgetDay;
+    this.setCookie('budgetDayValue', budgetDayValue.value);
     expensesMonthValue.value = this.expensesMonth;
+    this.setCookie('expensesMonthValue', expensesMonthValue.value);
     additionalExpensesValue.value = this.addExpenses.join(', ');
+    this.setCookie('additionalExpensesValue', additionalExpensesValue.value);
     additionalIncomeValue.value = this.addIncome.join(', ');
+    this.setCookie('additionalIncomeValue', additionalIncomeValue.value);
     targetMonthValue.value = this.getTargetMonth();
+    this.setCookie('targetMonthValue', targetMonthValue.value);
     incomePeriodValue.value = this.calcPeriod();
-    periodSelect.addEventListener('input', () => {incomePeriodValue.value = this.calcPeriod();});
+    this.setCookie('incomePeriodValue', incomePeriodValue.value);
+    periodSelect.addEventListener('input', () => {
+      incomePeriodValue.value = this.calcPeriod();
+      this.setCookie('incomePeriodValue', incomePeriodValue.value);
+    });
   }
 
   addExpIncBlock(event) {
@@ -294,6 +304,34 @@ class AppData {
       depositBank.removeEventListener('change', this.changePercent);
       depositPercent.removeEventListener('input', this.checkPercent.bind(this));
     }
+  }
+
+  setCookie(name, value, options = {}) {
+    if (!value) {
+      return;
+    }
+
+    options = {
+      path: '/',
+      ...options
+    };
+  
+    if (options.expires instanceof Date) {
+      options.expires = options.expires.toUTCString();
+    }
+  
+    let updatedCookie = encodeURIComponent(name) + "=" + encodeURIComponent(value);
+  
+    for (let optionKey in options) {
+      updatedCookie += "; " + optionKey;
+      let optionValue = options[optionKey];
+      if (optionValue !== true) {
+        updatedCookie += "=" + optionValue;
+      }
+    }
+  
+    document.cookie = updatedCookie;
+    localStorage.setItem(name, value);
   }
 
   eventsListeners() {
