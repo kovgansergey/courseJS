@@ -50,14 +50,33 @@ window.addEventListener('DOMContentLoaded', () => {
     const menu = document.querySelector('menu');
     const menuCloseBtn = menu.querySelector('.close-btn');
     const menuItems = menu.querySelectorAll('ul>li>a');
+    const mainLink = document.querySelector('main>a');
 
     function handlerMenu() {
       menu.classList.toggle('active-menu');
     }
 
+    function scrollLink(item) {
+
+      const blockId = item.getAttribute('href').substr(1);
+
+      document.getElementById(blockId).scrollIntoView({
+        behavior: 'smooth',
+        block: 'start'
+      });
+    }
+
     menuBtn.addEventListener('click', handlerMenu);
     menuCloseBtn.addEventListener('click', handlerMenu);
-    menuItems.forEach(item => item.addEventListener('click', handlerMenu));
+    menuItems.forEach(item => item.addEventListener('click', () => {
+      handlerMenu();
+      event.preventDefault();
+      scrollLink(event.target);
+    }));
+    mainLink.addEventListener('click', () => {
+      event.preventDefault();
+      scrollLink(event.target.parentNode);
+    });
   }
 
   toggleMenu();
