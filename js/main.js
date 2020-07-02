@@ -48,8 +48,6 @@ window.addEventListener('DOMContentLoaded', () => {
   function toggleMenu() {
     const menuBtn = document.querySelector('.menu');
     const menu = document.querySelector('menu');
-    const menuCloseBtn = menu.querySelector('.close-btn');
-    const menuItems = menu.querySelectorAll('ul>li>a');
     const mainLink = document.querySelector('main>a');
 
     function handlerMenu() {
@@ -67,12 +65,20 @@ window.addEventListener('DOMContentLoaded', () => {
     }
 
     menuBtn.addEventListener('click', handlerMenu);
-    menuCloseBtn.addEventListener('click', handlerMenu);
-    menuItems.forEach(item => item.addEventListener('click', () => {
-      handlerMenu();
-      event.preventDefault();
-      scrollLink(event.target);
-    }));
+
+    menu.addEventListener('click', event => {
+      const target = event.target;
+
+      if (target.tagName === 'A') {
+        event.preventDefault();
+        handlerMenu();
+
+        if (!target.classList.contains('close-btn')) {
+          scrollLink(target);
+        }
+      }
+    });
+
     mainLink.addEventListener('click', () => {
       event.preventDefault();
       scrollLink(event.target.parentNode);
@@ -85,7 +91,6 @@ window.addEventListener('DOMContentLoaded', () => {
   function togglePopup() {
     const popup = document.querySelector('.popup');
     const popupBtn = document.querySelectorAll('.popup-btn');
-    const popupCloseBtn = popup.querySelector('.popup-close');
 
     function popupAnimate() {
       let opacity = 0;
@@ -93,7 +98,7 @@ window.addEventListener('DOMContentLoaded', () => {
         popup.style.opacity = `${opacity}%`;
 
         if (opacity <= 100) {
-          opacity++;
+          opacity += 3;
           requestAnimationFrame(popupAnim);
         }
       });
@@ -106,11 +111,54 @@ window.addEventListener('DOMContentLoaded', () => {
       }
     }));
 
-    popupCloseBtn.addEventListener('click', () => {
-      popup.style.display = '';
+    popup.addEventListener('click', event => {
+      let target = event.target;
+
+      if (target.classList.contains('popup-close')) {
+        popup.style.display = '';
+      } else {
+        target = target.closest('.popup-content');
+
+        if (!target) {
+          popup.style.display = '';
+        }
+      }
     });
   }
 
   togglePopup();
+
+  // табы
+  function tabs() {
+    const tabHeader = document.querySelector('.service-header');
+    const tab = tabHeader.querySelectorAll('.service-header-tab');
+    const tabContent = document.querySelectorAll('.service-tab');
+
+    function toggleTabContent(index) {
+      for (let i = 0; i < tabContent.length; i++) {
+        if (index === i) {
+          tab[i].classList.add('active');
+          tabContent[i].classList.remove('d-none');
+        } else {
+          tab[i].classList.remove('active');
+          tabContent[i].classList.add('d-none');
+        }
+      }
+    }
+
+    tabHeader.addEventListener('click', event => {
+      const target = event.target.closest('.service-header-tab');
+
+      if (target) {
+        tab.forEach((item, i) => {
+          if (item === target) {
+            toggleTabContent(i);
+          }
+        });
+      }
+    });
+  }
+
+  tabs();
 
 });
