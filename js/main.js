@@ -46,9 +46,8 @@ window.addEventListener('DOMContentLoaded', () => {
 
   // меню
   function toggleMenu() {
-    const menuBtn = document.querySelector('.menu');
+    const main = document.querySelector('main');
     const menu = document.querySelector('menu');
-    const mainLink = document.querySelector('main>a');
 
     function handlerMenu() {
       menu.classList.toggle('active-menu');
@@ -64,7 +63,17 @@ window.addEventListener('DOMContentLoaded', () => {
       });
     }
 
-    menuBtn.addEventListener('click', handlerMenu);
+    main.addEventListener('click', event => {
+      let target = event.target;
+
+      if (target.closest('.menu')) handlerMenu();
+
+      if (target.closest('a')) {
+        event.preventDefault();
+        target = target.closest('a');
+        scrollLink(target);
+      }
+    });
 
     menu.addEventListener('click', event => {
       const target = event.target;
@@ -77,11 +86,6 @@ window.addEventListener('DOMContentLoaded', () => {
           scrollLink(target);
         }
       }
-    });
-
-    mainLink.addEventListener('click', () => {
-      event.preventDefault();
-      scrollLink(event.target.parentNode);
     });
   }
 
