@@ -258,4 +258,44 @@ window.addEventListener('DOMContentLoaded', () => {
 
   slider();
 
+  // калькулятор
+  function calculator() {
+    const calc = document.getElementById('calc');
+
+    calc.addEventListener('input', event => {
+      const target = event.target;
+
+      if (target.tagName === 'INPUT') {
+        target.value = target.value.replace(/\D/, '');
+      }
+    });
+  }
+
+  calculator();
+
+  // команда
+  function command() {
+    const command = document.getElementById('command');
+    let firstSrc;
+
+    command.addEventListener('mouseover', event => {
+      const target = event.target;
+
+      if (target.tagName === 'IMG') {
+        firstSrc = target.src;
+        target.src = target.dataset.img;
+      }
+    });
+
+    command.addEventListener('mouseout', event => {
+      const target = event.target;
+
+      if (target.tagName === 'IMG') {
+        target.src = firstSrc;
+      }
+    });
+  }
+
+  command();
+
 });
