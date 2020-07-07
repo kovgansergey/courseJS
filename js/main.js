@@ -281,6 +281,21 @@ window.addEventListener('DOMContentLoaded', () => {
       }
     });
 
+    const totalAnimate = (item) => {
+      let coin = 0;
+
+      requestAnimationFrame(function totalAnim() {
+        totalValue.textContent = coin;
+
+        if (coin < item) {
+          coin += Math.floor(item / 100);
+          requestAnimationFrame(totalAnim);
+        } else {
+          totalValue.textContent = item;
+        }
+      });
+    };
+
     const countSum = () => {
       let total = 0;
       let countValue = 1;
@@ -302,7 +317,7 @@ window.addEventListener('DOMContentLoaded', () => {
         total = price * typeValue * squareValue * countValue * dayValue;
       }
 
-      totalValue.textContent = total;
+      totalAnimate(Math.floor(total));
     };
 
     calcBlock.addEventListener('change', event => {
