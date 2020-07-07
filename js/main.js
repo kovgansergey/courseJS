@@ -197,7 +197,9 @@ window.addEventListener('DOMContentLoaded', () => {
       prevSlide(slide, currentSlide, 'portfolio-item-active');
       prevSlide(dot, currentSlide, 'dot-active');
       currentSlide++;
-      if (currentSlide >= slide.length) currentSlide = 0;
+      if (currentSlide >= slide.length) {
+        currentSlide = 0;
+      }
       nextSlide(slide, currentSlide, 'portfolio-item-active');
       nextSlide(dot, currentSlide, 'dot-active');
     }
@@ -246,11 +248,15 @@ window.addEventListener('DOMContentLoaded', () => {
     });
 
     slider.addEventListener('mouseover', event => {
-      if (event.target.matches('.portfolio-btn, .dot')) stopSlide();
+      if (event.target.matches('.portfolio-btn, .dot')) {
+        stopSlide();
+      }
     });
 
     slider.addEventListener('mouseout', event => {
-      if (event.target.matches('.portfolio-btn, .dot')) startSlide();
+      if (event.target.matches('.portfolio-btn, .dot')) {
+        startSlide();
+      }
     });
 
     startSlide(2000);
@@ -276,14 +282,16 @@ window.addEventListener('DOMContentLoaded', () => {
   // команда
   function command() {
     const command = document.getElementById('command');
-    let firstSrc;
+    
+    const changePhoto = item => {
+      [item.src, item.dataset.img] = [item.dataset.img, item.src];
+    };
 
     command.addEventListener('mouseover', event => {
       const target = event.target;
 
       if (target.tagName === 'IMG') {
-        firstSrc = target.src;
-        target.src = target.dataset.img;
+        changePhoto(target);
       }
     });
 
@@ -291,7 +299,7 @@ window.addEventListener('DOMContentLoaded', () => {
       const target = event.target;
 
       if (target.tagName === 'IMG') {
-        target.src = firstSrc;
+        changePhoto(target);
       }
     });
   }
