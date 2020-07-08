@@ -281,7 +281,7 @@ window.addEventListener('DOMContentLoaded', () => {
       }
     });
 
-    const totalAnimate = (item) => {
+    const totalAnimate = item => {
       let coin = 0;
 
       requestAnimationFrame(function totalAnim() {
@@ -303,7 +303,7 @@ window.addEventListener('DOMContentLoaded', () => {
       const typeValue = calcType.options[calcType.selectedIndex].value;
       const squareValue = +calccSquare.value;
 
-      if ( calcCount.value > 1) {
+      if (calcCount.value > 1) {
         countValue += (calcCount.value - 1) / 10;
       }
 
@@ -334,7 +334,7 @@ window.addEventListener('DOMContentLoaded', () => {
   // команда
   function command() {
     const command = document.getElementById('command');
-    
+
     const changePhoto = item => {
       [item.src, item.dataset.img] = [item.dataset.img, item.src];
     };
