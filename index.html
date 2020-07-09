@@ -462,6 +462,27 @@
 	});
 	
 	valid2.init();
+
+	const valid3 = new Validator({
+		selector: '#form3',
+		pattern: {},
+		method: {
+			'form3-phone': [
+				['notEmpty'],
+				['pattern', 'phone']
+			],
+			'form3-email': [
+				['notEmpty'],
+				['pattern', 'email']
+			],
+			'form3-name': [
+				['notEmpty'],
+				['pattern', 'name']
+			]
+		}
+	});
+	
+	valid3.init();
 </script>
 </body>
 </html>
