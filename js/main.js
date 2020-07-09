@@ -361,12 +361,53 @@ window.addEventListener('DOMContentLoaded', () => {
   // send-ajax-form
   function sendForm(formID) {
     const errorMessage = 'Что-то пошло не так...';
-    const loadMessage = 'Загрузка...';
     const successMessage = 'Спасибо! Мы скоро с вами свяжемся!';
 
     const form = document.getElementById(formID);
     const statusMessage = document.createElement('div');
     statusMessage.style.cssText = 'font-size: 2rem; color: white;';
+    const style = document.createElement('style');
+
+    function loadAnimate() {
+      statusMessage.innerHTML = `<div class="sk-three-bounce">
+                                  <div class="sk-bounce-1 sk-child"></div>
+                                  <div class="sk-bounce-2 sk-child"></div>
+                                  <div class="sk-bounce-3 sk-child"></div>
+                                </div>`;
+
+      style.textContent = `.sk-three-bounce {
+                            width: 8em;
+                            margin: auto;
+                            text-align: center;
+                          }
+                          
+                          .sk-three-bounce .sk-child {
+                            width: 18px;
+                            height: 18px;
+                            background-color: white;
+                            border-radius: 100%;
+                            display: inline-block;
+                            animation: sk-three-bounce 1.4s ease-in-out 0s infinite both;
+                          }
+                          
+                          .sk-three-bounce .sk-bounce-1 {
+                            animation-delay: -0.32s;
+                          }
+                          
+                          .sk-three-bounce .sk-bounce-2 {
+                            animation-delay: -0.16s;
+                          }
+                          
+                          @keyframes sk-three-bounce {
+                            0%, 80%, 100% {
+                              transform: scale(0);
+                            }
+                            40% {
+                              transform: scale(1);
+                            }
+                          }`;
+      document.head.append(style);
+    }
 
     form.addEventListener('input', event => {
       const target = event.target;
@@ -400,8 +441,10 @@ window.addEventListener('DOMContentLoaded', () => {
         if (request.status === 200) {
           outputData();
           clearInputs();
+          style.remove();
         } else {
           errorData(request.status);
+          style.remove();
         }
       });
 
@@ -413,7 +456,7 @@ window.addEventListener('DOMContentLoaded', () => {
     form.addEventListener('submit', event => {
       event.preventDefault();
       form.append(statusMessage);
-      statusMessage.textContent = loadMessage;
+      loadAnimate();
       const formData = new FormData(form);
       const body = {};
 
