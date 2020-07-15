@@ -411,7 +411,7 @@ window.addEventListener('DOMContentLoaded', () => {
 
     form.addEventListener('input', event => {
       const target = event.target;
-      
+
       if (target.name === 'user_phone') {
         target.value = target.value.replace(/[^\+\d]/, '');
       }
@@ -429,28 +429,30 @@ window.addEventListener('DOMContentLoaded', () => {
       });
     }
 
-    function postData(body, outputData, errorData) {
-      const request = new XMLHttpRequest();
+    function postData(body) {
+      return new Promise((resolve, reject) => {
+        const request = new XMLHttpRequest();
 
-      request.addEventListener('readystatechange', () => {
+        request.addEventListener('readystatechange', () => {
 
-        if (request.readyState !== 4) {
-          return;
-        }
+          if (request.readyState !== 4) {
+            return;
+          }
 
-        if (request.status === 200) {
-          outputData();
-          clearInputs();
-          style.remove();
-        } else {
-          errorData(request.status);
-          style.remove();
-        }
+          if (request.status === 200) {
+            clearInputs();
+            style.remove();
+            resolve();
+          } else {
+            style.remove();
+            reject(request.status);
+          }
+        });
+
+        request.open('POST', './server.php');
+        request.setRequestHeader('Content-Type', 'application/json');
+        request.send(JSON.stringify(body));
       });
-
-      request.open('POST', './server.php');
-      request.setRequestHeader('Content-Type', 'application/json');
-      request.send(JSON.stringify(body));
     }
 
     form.addEventListener('submit', event => {
@@ -463,22 +465,15 @@ window.addEventListener('DOMContentLoaded', () => {
       for (const val of formData.entries()) {
         body[val[0]] = val[1];
       }
-      
-      postData(body, 
-        () => {
-          statusMessage.textContent = successMessage;
-        },
-        (error) => {
+
+      postData(body)
+        .then(() => statusMessage.textContent = successMessage)
+        .catch(error => {
           statusMessage.textContent = errorMessage;
           console.error(error);
         });
     });
   }
-
-  document.body.addEventListener('focus', event => {
-    const target = event.target;
-    console.log(target);
-  });
 
   sendForm('form1');
   sendForm('form2');
