@@ -430,28 +430,12 @@ window.addEventListener('DOMContentLoaded', () => {
     }
 
     function postData(body) {
-      return new Promise((resolve, reject) => {
-        const request = new XMLHttpRequest();
-
-        request.addEventListener('readystatechange', () => {
-
-          if (request.readyState !== 4) {
-            return;
-          }
-
-          if (request.status === 200) {
-            clearInputs();
-            style.remove();
-            resolve();
-          } else {
-            style.remove();
-            reject(request.status);
-          }
-        });
-
-        request.open('POST', './server.php');
-        request.setRequestHeader('Content-Type', 'application/json');
-        request.send(JSON.stringify(body));
+      return fetch('./server.php', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(body)
       });
     }
 
@@ -467,9 +451,17 @@ window.addEventListener('DOMContentLoaded', () => {
       }
 
       postData(body)
-        .then(() => statusMessage.textContent = successMessage)
+        .then((response) => {
+          if (response.status !== 200) {
+            throw new Error('status network is not 200');
+          }
+          statusMessage.textContent = successMessage;
+          clearInputs();
+          style.remove();
+        })
         .catch(error => {
           statusMessage.textContent = errorMessage;
+          style.remove();
           console.error(error);
         });
     });
