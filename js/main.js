@@ -433,9 +433,9 @@ window.addEventListener('DOMContentLoaded', () => {
       return fetch('./server.php', {
         method: 'POST',
         headers: {
-          'Content-Type': 'application/json'
+          'Content-Type': 'multipart/form-data'
         },
-        body: JSON.stringify(body)
+        body: body
       });
     }
 
@@ -444,13 +444,8 @@ window.addEventListener('DOMContentLoaded', () => {
       form.append(statusMessage);
       loadAnimate();
       const formData = new FormData(form);
-      const body = {};
 
-      for (const val of formData.entries()) {
-        body[val[0]] = val[1];
-      }
-
-      postData(body)
+      postData(formData)
         .then((response) => {
           if (response.status !== 200) {
             throw new Error('status network is not 200');
