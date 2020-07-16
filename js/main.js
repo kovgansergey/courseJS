@@ -342,7 +342,7 @@ window.addEventListener('DOMContentLoaded', () => {
     command.addEventListener('mouseover', event => {
       const target = event.target;
 
-      if (target.tagName === 'IMG') {
+      if (target.tagName === 'IMG' && target.dataset.img) {
         changePhoto(target);
       }
     });
@@ -350,7 +350,7 @@ window.addEventListener('DOMContentLoaded', () => {
     command.addEventListener('mouseout', event => {
       const target = event.target;
 
-      if (target.tagName === 'IMG') {
+      if (target.tagName === 'IMG' && target.dataset.img) {
         changePhoto(target);
       }
     });
