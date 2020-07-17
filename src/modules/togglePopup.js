@@ -5,7 +5,7 @@
     function popupAnimate() {
       let opacity = 0;
       requestAnimationFrame(function popupAnim() {
-        popup.style.opacity = `${opacity}%`;
+        popup.style.opacity = opacity / 100;
 
         if (opacity <= 100) {
           opacity += 3;
@@ -16,6 +16,7 @@
 
     popupBtn.forEach(item => item.addEventListener('click', () => {
       popup.style.display = 'block';
+      popup.style.opacity = 0;
       if (window.innerWidth >= 768) {
         popupAnimate();
       }

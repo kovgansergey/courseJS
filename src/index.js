@@ -19,6 +19,7 @@ import tabs from './modules/tabs';
 import slider from './modules/slider';
 import calculator from './modules/calculator';
 import command from './modules/command';
+import maskPhone from './modules/maskPhone';
 import sendForm from './modules/sendForm';
 
 // Таймер
@@ -41,6 +42,11 @@ calculator(100);
 
 // команда
 command();
+
+// маска телефона
+maskPhone('#form1-phone');
+maskPhone('#form2-phone');
+maskPhone('#form3-phone');
 
 // send-ajax-form
 sendForm('form1');

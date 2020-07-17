@@ -60,11 +60,20 @@
       }
     });
 
-    function clearInputs() {
+    function styleInputs(check) {
       const formInputs = form.querySelectorAll('input');
 
       formInputs.forEach(item => {
-        item.value = '';
+        if (check) {
+          item.value = '';
+          item.style.outline = 'none';
+          item.style.boxShadow = 'none';
+        } else {
+          item.style.outline = '';
+          item.style.boxShadow = '';
+          item.style.border = '';
+        }
+        
       });
     }
 
@@ -78,8 +87,22 @@
       });
     }
 
+    form.addEventListener('click', event => {
+      const target = event.target;
+      if (target.classList.contains('form-btn')) {
+        styleInputs(false);
+      }
+    });
+
     form.addEventListener('submit', event => {
       event.preventDefault();
+
+      const phoneInput = form.querySelector('.form-phone');
+      if (phoneInput.value.length !== 18) {
+        phoneInput.style.border = '1px solid red';
+        return;
+      }
+
       form.append(statusMessage);
       loadAnimate();
       const formData = new FormData(form);
@@ -90,7 +113,7 @@
             throw new Error('status network is not 200');
           }
           statusMessage.textContent = successMessage;
-          clearInputs();
+          styleInputs(true);
           style.remove();
         })
         .catch(error => {
