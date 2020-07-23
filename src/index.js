@@ -1,5 +1,14 @@
 'use strict';
 
-import testModule from './modules/testModule';
+import popupToggle from './modules/popupToggle';
 
-testModule();
+
+document.addEventListener('click', event => {
+  const target = event.target;
+
+  // модальное окно popup-call при клике на "перезвоните мне" в header и footer
+  if (target.classList.contains('call-btn')) {
+    event.preventDefault();
+    popupToggle('.popup-call');
+  }
+});
