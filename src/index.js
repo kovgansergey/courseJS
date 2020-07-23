@@ -1,6 +1,7 @@
 'use strict';
 
 import popupToggle from './modules/popupToggle';
+import maskPhone from './modules/maskPhone';
 
 
 document.addEventListener('click', event => {
@@ -12,3 +13,6 @@ document.addEventListener('click', event => {
     popupToggle('.popup-call');
   }
 });
+
+// маска телефона
+maskPhone('.phone-user', '+7(___)___-__-__');
