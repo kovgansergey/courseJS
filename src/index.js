@@ -2,6 +2,7 @@
 
 import popupToggle from './modules/popupToggle';
 import maskPhone from './modules/maskPhone';
+import sendForm from './modules/sendForm';
 
 
 document.addEventListener('click', event => {
@@ -16,3 +17,7 @@ document.addEventListener('click', event => {
 
 // маска телефона
 maskPhone('.phone-user', '+7(___)___-__-__');
+
+// отправка форм
+sendForm('form1');
+sendForm('form2');
