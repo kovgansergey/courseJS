@@ -3,6 +3,7 @@
 import popupToggle from './modules/popupToggle';
 import maskPhone from './modules/maskPhone';
 import sendForm from './modules/sendForm';
+import panelGroup from './modules/panelGroup';
 
 
 document.addEventListener('click', event => {
@@ -17,6 +18,11 @@ document.addEventListener('click', event => {
   // модальное окно popup-discount со скидкой
   if (target.classList.contains('discount-btn')) {
     popupToggle('.popup-discount');
+  }
+
+  // аккордеон
+  if (target.closest('.panel-group')) {
+    panelGroup(target);
   }
 });
 
