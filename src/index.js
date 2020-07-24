@@ -13,6 +13,11 @@ document.addEventListener('click', event => {
     event.preventDefault();
     popupToggle('.popup-call');
   }
+
+  // модальное окно popup-discount со скидкой
+  if (target.classList.contains('discount-btn')) {
+    popupToggle('.popup-discount');
+  }
 });
 
 // маска телефона
