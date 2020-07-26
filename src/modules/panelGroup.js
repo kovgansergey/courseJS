@@ -6,7 +6,7 @@ export default function panelGroup(target) {
   if (target.closest('a')) event.preventDefault();
 
   function hideCollapse() {
-    panelCollapse.forEach(item => item.classList.remove('in'))
+    panelCollapse.forEach(item => item.classList.remove('in'));
   }
 
   function animateCollapse(elem) {
@@ -22,7 +22,7 @@ export default function panelGroup(target) {
       } else {
         elem.style.height = '';
       }
-    })
+    });
   }
 
   if (target.closest('.panel-heading')) {
