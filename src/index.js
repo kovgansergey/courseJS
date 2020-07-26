@@ -37,6 +37,11 @@ document.addEventListener('click', event => {
     popupToggle('.popup-discount', constructor('getData'));
   }
 
+  // модальное окно popup-check при клике на Получить чек-лист
+  if (target.classList.contains('check-btn')) {
+    popupToggle('.popup-check');
+  }
+
   // оба аккордеона
   if (target.closest('.panel-group')) {
     panelGroup(target);
