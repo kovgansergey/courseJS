@@ -5,6 +5,7 @@ import sendForm from './modules/sendForm';
 import popupToggle from './modules/popupToggle';
 import panelGroup from './modules/panelGroup';
 import constructor from './modules/constructor';
+import moreBlocks from './modules/moreBlocks';
 
 
 // маска телефона
@@ -39,5 +40,10 @@ document.addEventListener('click', event => {
   // оба аккордеона
   if (target.closest('.panel-group')) {
     panelGroup(target);
+  }
+
+  // кнопка Больше
+  if (target.classList.contains('add-sentence-btn')) {
+    moreBlocks(target);
   }
 });
