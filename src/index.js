@@ -6,6 +6,7 @@ import popupToggle from './modules/popupToggle';
 import panelGroup from './modules/panelGroup';
 import constructor from './modules/constructor';
 import moreBlocks from './modules/moreBlocks';
+import getQuestion from './modules/getQuestion';
 
 
 // маска телефона
@@ -40,6 +41,12 @@ document.addEventListener('click', event => {
   // модальное окно popup-check при клике на Получить чек-лист
   if (target.classList.contains('check-btn')) {
     popupToggle('.popup-check');
+  }
+
+  // модальное окно popup-consultation с вопросом пользователя
+  if (target.classList.contains('consultation-btn')) {
+    event.preventDefault();
+    popupToggle('.popup-consultation', getQuestion());
   }
 
   // оба аккордеона
