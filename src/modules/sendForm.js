@@ -10,6 +10,8 @@ export default function sendForm(formId) {
 
     formInputs.forEach(item => {
       item.value = '';
+      item.style.outline = 'none';
+      item.style.boxShadow = 'none';
     });
   }
 

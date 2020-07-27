@@ -13,6 +13,8 @@ export default function popupToggle(popupSelector, bodyData = {}) {
 
     formInputs.forEach(item => {
       item.value = '';
+      item.style.outline = 'none';
+      item.style.boxShadow = 'none';
     });
   }
 
@@ -104,6 +106,7 @@ export default function popupToggle(popupSelector, bodyData = {}) {
   }
 
   function popupOpen(popup) {
+    popup.style.opacity = 0;
     popup.style.display = 'block';
     popupAnimate(popup);
     popup.addEventListener('click', popupClose);

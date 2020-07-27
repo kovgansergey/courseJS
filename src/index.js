@@ -1,5 +1,13 @@
 'use strict';
 
+import "@babel/polyfill";
+import 'nodelist-foreach-polyfill';
+import elementClosest from 'element-closest';
+elementClosest(window);
+import 'formdata-polyfill';
+import 'mdn-polyfills/Node.prototype.append';
+import 'mdn-polyfills/Node.prototype.remove';
+
 import maskPhone from './modules/maskPhone';
 import sendForm from './modules/sendForm';
 import popupToggle from './modules/popupToggle';
